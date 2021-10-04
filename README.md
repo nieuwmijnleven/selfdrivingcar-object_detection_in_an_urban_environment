@@ -68,7 +68,7 @@ Keep in mind that you should refer to this analysis to create the different spit
 
 Now you have become one with the data! Congratulations! How will you use this knowledge to create the different splits: training, validation and testing. There are no single answer to this question but you will need to justify your choice in your submission. You will need to implement the `split_data` function in the `create_splits.py` file. Once you have implemented this function, run it using:
 ```
-python create_splits.py --data_dir /home/workspace/data/
+python create_splits.py --data_dir ./data/
 ```
 
 NOTE: Keep in mind that your storage is limited. The files should be <ins>moved</ins> and not copied. 
@@ -81,7 +81,7 @@ First, let's download the [pretrained model](http://download.tensorflow.org/mode
 
 Now we need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
 ```
-python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+python edit_config.py --train_dir ./data/train/ --eval_dir ./data/valid/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
 A new config file has been created, `pipeline_new.config`.
 
@@ -90,11 +90,11 @@ A new config file has been created, `pipeline_new.config`.
 You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
 * a training process:
 ```
-python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config
+python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_new.config
 ```
 * an evaluation process:
 ```
-python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config --checkpoint_dir=training/reference/
+python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_new.config --checkpoint_dir=./training/reference/
 ```
 
 NOTE: both processes will display some Tensorflow warnings.
@@ -114,12 +114,16 @@ Keep in mind that the following are also available:
 #### Export the trained model
 Modify the arguments of the following function to adjust it to your models:
 ```
-python .\exporter_main_v2.py --input_type image_tensor --pipeline_config_path training/experiment0/pipeline.config --trained_checkpoint_dir training/experiment0/ckpt-50 --output_directory training/experiment0/exported_model/
+python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./pipeline_new.config --trained_checkpoint_dir ./training/reference/  --output_directory ./saved_model
 ```
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
 ```
-python inference_video.py -labelmap_path label_map.pbtxt --model_path training/experiment0/exported_model/saved_model --tf_record_path /home/workspace/data/test/tf.record --config_path training/experiment0/pipeline_new.config --output_path animation.mp4
+python inference_video.py --labelmap_path ./label_map.pbtxt --model_path ./saved_model/saved_model --tf_record_path ./data/test/segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord --config_path ./pipeline_new.config --output_path ./animation.mp4
+```
+in the case of occuring an error related to ffmeg, run the following command
+```
+conda install -c conda-forge ffmpeg
 ```
 
 ## Submission Template
