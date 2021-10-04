@@ -53,7 +53,8 @@ flags.DEFINE_string(
 flags.DEFINE_integer('eval_timeout', 3600, 'Number of seconds to wait for an'
                      'evaluation checkpoint before exiting.')
 
-flags.DEFINE_bool('use_tpu', False, 'Whether the job is executing on a TPU.')
+#flags.DEFINE_bool('use_tpu', False, 'Whether the job is executing on a TPU.')
+flags.DEFINE_bool('use_tpu', True, 'Whether the job is executing on a TPU.')
 flags.DEFINE_string(
     'tpu_name',
     default=None,
