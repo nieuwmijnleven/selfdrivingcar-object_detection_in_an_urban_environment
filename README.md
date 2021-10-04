@@ -25,7 +25,11 @@ experiments/
     - experiment0/....
     - experiment1/....
     - experiment2/...
-    - pretrained-models/: contains the checkpoints of the pretrained models.
+```
+
+The training folder will be organized as follow:
+```
+- pretrained-models/: contains the checkpoints of the pretrained models.
 ```
 
 ## Prerequisites
@@ -90,11 +94,11 @@ A new config file has been created, `pipeline_new.config`.
 You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
 * a training process:
 ```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_new.config
+python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_experiment0.config
 ```
 * an evaluation process:
 ```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_new.config --checkpoint_dir=./training/reference/
+python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=pipeline_experiment0.config --checkpoint_dir=./training/reference/
 ```
 
 NOTE: both processes will display some Tensorflow warnings.
@@ -114,14 +118,14 @@ Keep in mind that the following are also available:
 #### Export the trained model
 Modify the arguments of the following function to adjust it to your models:
 ```
-python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./pipeline_new.config --trained_checkpoint_dir ./training/reference/  --output_directory ./saved_model
+python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./pipeline_experiment0.config --trained_checkpoint_dir ./training/reference/  --output_directory ./saved_model
 ```
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
 ```
-python inference_video.py --labelmap_path ./label_map.pbtxt --model_path ./saved_model/saved_model --tf_record_path ./data/test/segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord --config_path ./pipeline_new.config --output_path ./animation.mp4
+python inference_video.py --labelmap_path ./label_map.pbtxt --model_path ./experiments/experiment0/saved_model --tf_record_path ./data/test/segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord --config_path ./pipeline_experiment0.config --output_path ./experiments/experiment0/animation.mp4
 ```
-in the case of occuring an error related to ffmeg, run the following command
+in the case of occuring an error related to ffmpeg, run the following command
 ```
 conda install -c conda-forge ffmpeg
 ```
