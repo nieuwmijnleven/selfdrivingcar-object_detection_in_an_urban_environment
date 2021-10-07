@@ -49,11 +49,11 @@ optimizer {
 
 #### 2. experiment#2 : applying data augmentation and using a constant learning_rate
 ##### (1) Data Augmentation : applied additional three data augmentation schemes to preprocessing steps
-* applying gaussian filter
-* adjusting brightness
-* adjusting saturation
 * random_horizontal_flip
 * random_crop_image
+* **applying gaussian filter**
+* **adjusting brightness**
+* **adjusting saturation**
 
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/data_augmentaion.png?raw=true" width=400 />
 
