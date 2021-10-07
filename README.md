@@ -43,6 +43,9 @@ optimizer {
 ##### (2) Relationships between learning Rates and total losses 
 * observing the relation between total loss and learning rate using cosine_decay_learning_rate
 
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-finding-learning-rate1.png?raw=true" width=400 />
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-finding-learning-rate2.png?raw=true" width=400 />
+
 #### 2. experiment#2 : applying data augmentation and using a constant learning_rate
 ##### (1) Data Augmentation : applied additional three data augmentation schemes to preprocessing steps
 * applying gaussian filter
