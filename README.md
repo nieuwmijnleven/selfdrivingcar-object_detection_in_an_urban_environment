@@ -92,6 +92,7 @@ This section should highlight the different strategies you adopted to improve yo
 #### (1) Reducing total loss
 * Changing Mementum optimizer to **Adam optimizer**
 * Changing the constant learning rate to **the manual step learning rate** 
+* Changing the initial learning rate from 0.0004 to **0.0001**
 ```
   optimizer {
     adam_optimizer {
