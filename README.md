@@ -116,10 +116,11 @@ This section should highlight the different strategies you adopted to improve yo
    use_moving_average: false
   }
 ```
-#### (2) Increase Accuracy 
-* increase the number of dataset files from 100 to **799**
+#### (2) Enhancing Accuracy
+* increase samples
+    * increase the number of dataset files from 100 to **799**
 
-dropout
-early stop
-data augmentation
+#### (3) Experimental Results : **LOSS**
 
+
+#### (4) Experimental Results : **ACCURACY**
