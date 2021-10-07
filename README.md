@@ -52,6 +52,11 @@ optimizer {
 * applying gaussian filter
 * adjusting brightness
 * adjusting saturation
+* random_horizontal_flip
+* random_crop_image
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/data_augmentaion.png?raw=true" width=400 />
+
 ##### (2) A constant learning_rate
 * observing the relation between total loss and learning rate using cosine_decay_learning_rate
 * data visualization
