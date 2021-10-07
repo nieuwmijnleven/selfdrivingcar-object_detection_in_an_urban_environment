@@ -40,7 +40,7 @@ optimizer {
 ```
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-learning_rate.png?raw=true" width=400 />
 
-#### (2) The relation between learning Rates and total losses 
+#### (2) The relation between learning rates and total losses 
 * observing the relation between total loss and learning rate using cosine_decay_learning_rate
 * I finally chosen **0.0004** as the learning rate for the **experiment#2**
 
