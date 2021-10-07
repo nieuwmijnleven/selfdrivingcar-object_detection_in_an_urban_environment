@@ -20,7 +20,25 @@ This section should detail the results of the reference experiment. It should in
 
 #### 1. experiment#1 : finding an optimal learning_rate
 ##### (1) Learning Rate
-
+* strategy : **cosine_decay_learning_rate
+* configuration 
+```
+optimizer {
+    momentum_optimizer {
+      learning_rate {
+        cosine_decay_learning_rate {
+          learning_rate_base: 0.04
+          total_steps: 25000
+          warmup_learning_rate: 0.013333
+          warmup_steps: 2000
+        }
+      }
+      momentum_optimizer_value: 0.9
+    }
+    use_moving_average: false
+  }
+```
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-learning_rate.png?raw=true" width=400 />
 ##### (2) Relationships between learning Rates and total losses 
 * observing the relation between total loss and learning rate using cosine_decay_learning_rate
 
