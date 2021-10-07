@@ -67,10 +67,28 @@ optimizer {
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment2-loss.png?raw=true" width=600 />
 
 #### (4) Experimental Results : **ACCURACY**
-
+```
+DetectionBoxes_Precision/mAP: 0.194451
+DetectionBoxes_Precision/mAP@.50IOU: 0.384055
+DetectionBoxes_Precision/mAP@.75IOU: 0.164196
+DetectionBoxes_Precision/mAP (small): 0.057154
+DetectionBoxes_Precision/mAP (medium): 0.477788
+DetectionBoxes_Precision/mAP (large): 0.751707
+DetectionBoxes_Recall/AR@1: 0.060288
+DetectionBoxes_Recall/AR@10: 0.206005
+DetectionBoxes_Recall/AR@100: 0.264424
+DetectionBoxes_Recall/AR@100 (small): 0.124982
+DetectionBoxes_Recall/AR@100 (medium): 0.555998
+DetectionBoxes_Recall/AR@100 (large): 0.805090
+Loss/localization_loss: 0.339901
+Loss/classification_loss: 0.258205
+Loss/regularization_loss: 0.222951
+Loss/total_loss: 0.821058
+```
 
 ### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+### Experiment#3 : making a improved model
 #### (1) Reducing total loss
 * Changing Mementum optimizer to **Adam optimizer**
 * Changing the constant learning rate to **the manual step learning rate** 
@@ -97,7 +115,7 @@ This section should highlight the different strategies you adopted to improve yo
    use_moving_average: false
   }
 ```
-##### (2) Increase Accuracy 
+#### (2) Increase Accuracy 
 * increase dataset files from 100 to **799**
 
 dropout
