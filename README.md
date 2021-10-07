@@ -75,6 +75,29 @@ This section should highlight the different strategies you adopted to improve yo
 ##### (1) High Loss Rate
 * Changing Mementum optimizer to **Adam optimizer**
 * Changing the constant learning rate to **the manual step learning rate** 
+```
+  optimizer {
+    adam_optimizer {
+      learning_rate {
+        manual_step_learning_rate {
+          initial_learning_rate: .0001
+          schedule {
+            step: 25000
+            learning_rate: .00005
+          }
+          schedule {
+            step: 60000
+            learning_rate: .00001
+          }
+          schedule {
+            step: 85000
+            learning_rate: .000005
+          }
+       }
+    }
+   use_moving_average: false
+  }
+```
 ##### (2) Low Accuracy 
 * increase dataset files from 100 to **799**
 
