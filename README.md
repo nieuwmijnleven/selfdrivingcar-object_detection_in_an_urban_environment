@@ -17,12 +17,19 @@ This section should detail the cross validation strategy and justify your approa
 ### Training 
 #### Reference experiment
 This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
-#### experiment-1 : applying data augmentation and finding an optimal learning_rate
+
+#### experiment-1 : finding an optimal learning_rate
+##### (1) Learning Rate
+
+##### (2) Relationships between learning Rates and total losses 
+* observing the relation between total loss and learning rate using cosine_decay_learning_rate
+
+#### experiment-2 : applying data augmentation and using a constant learning_rate
 ##### (1) Data Augmentation : applied additional three data augmentation schemes to preprocessing steps
 * applying gaussian filter
 * adjusting brightness
 * adjusting saturation
-##### (2) Optimal Learning Rate
+##### (2) A constant learning_rate
 * observing the relation between total loss and learning rate using cosine_decay_learning_rate
 * data visualization
 * finding an optimal learning rate
