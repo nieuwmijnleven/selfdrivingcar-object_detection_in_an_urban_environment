@@ -71,6 +71,12 @@ optimizer {
 
 ### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+#### finding problems from experiment#2
+##### (1) High Loss Rate
+* Changing Mementum optimizer to **Adam optimizer**
+* Changing the constant learning rate to **the manual step learning rate** 
+##### (2) Low Accuracy 
+* increase dataset files from 100 to **799**
 
 dropout
 early stop
