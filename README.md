@@ -58,9 +58,9 @@ optimizer {
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/data_augmentaion.png?raw=true" width=400 />
 
 ##### (2) A constant learning_rate
-* observing the relation between total loss and learning rate using cosine_decay_learning_rate
-* data visualization
-* finding an optimal learning rate
+* the constant learning rate : **0.0004**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment2-learning_rate.png?raw=true" width=400 />
 
 #### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
