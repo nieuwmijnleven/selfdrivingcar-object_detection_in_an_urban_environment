@@ -116,7 +116,7 @@ This section should highlight the different strategies you adopted to improve yo
   }
 ```
 #### (2) Increase Accuracy 
-* increase dataset files from 100 to **799**
+* increase the number of dataset files from 100 to **799**
 
 dropout
 early stop
