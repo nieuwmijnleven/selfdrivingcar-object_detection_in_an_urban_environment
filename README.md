@@ -86,6 +86,16 @@ Loss/regularization_loss: 0.222951
 Loss/total_loss: 0.821058
 ```
 
+#### (5) Experimental Result : **ANALYSIS**
+* The detection rate of small objects : **LOW**
+    * DetectionBoxes_Precision/mAP (small): 0.057154
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982
+* the detection rate of medium objects  : **LOW**
+    * DetectionBoxes_Precision/mAP (medium): 0.477788
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998
+* the evaluation total loss : **HIGH**
+    * Loss/total_loss: 0.821058 
+
 ### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
 ### Experiment#3 : making a improved model
