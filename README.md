@@ -120,8 +120,9 @@ Loss/total_loss: 0.821058
     * DetectionBoxes_Precision/mAP (medium): 0.477788
     * DetectionBoxes_Recall/AR@100 (medium): 0.555998
 
-### Improve on the reference
+## Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+
 ### Experiment#3 : making a improved model
 #### (1) Reducing total loss
 * Changing Mementum optimizer to **Adam optimizer**
