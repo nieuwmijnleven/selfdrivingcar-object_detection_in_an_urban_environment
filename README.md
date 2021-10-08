@@ -104,7 +104,7 @@ This section should highlight the different strategies you adopted to improve yo
 #### (1) Reducing total loss
 * Changing Mementum optimizer to **Adam optimizer**
 * Changing the constant learning rate to **the manual step learning rate** 
-    * 0.0001(initial) -> 0.00005(25000 step) -> 0.00001(60000 step) -> 0.000005(85000 step)    
+    * 0.0001(initial) -> 0.00005(15000 step) -> 0.00001(30000 step) -> 0.000005(60000 step) -> 0.000001(90000 step)      
 * Changing the initial learning rate from 0.0004 to **0.0001**
 ```
   optimizer {
@@ -113,27 +113,46 @@ This section should highlight the different strategies you adopted to improve yo
         manual_step_learning_rate {
           initial_learning_rate: .0001
           schedule {
-            step: 25000
+            step: 15000
             learning_rate: .00005
           }
           schedule {
-            step: 60000
+            step: 30000
             learning_rate: .00001
           }
           schedule {
-            step: 85000
+            step: 60000
             learning_rate: .000005
+          }
+          schedule {
+            step: 90000
+            learning_rate: .000001
           }
        }
     }
    use_moving_average: false
   }
 ```
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment-improvement2-learning_rate.png?raw=true" width=400 />
+
 #### (2) Enhancing Accuracy
 * increase samples
     * increase the number of dataset files from 100 to **799**
 
 #### (3) Experimental Results : **LOSS**
 
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment-improvement2-loss.png?raw=true" width=600 />
 
 #### (4) Experimental Results : **ACCURACY**
+```
+```
+
+#### (5) Experimental Result : **ANALYSIS**
+* The training total loss : 0.4719 -> **0.2176**  
+* The evaluation total loss : 0.821058 -> **** 
+* The detection rate of small objects
+    * DetectionBoxes_Precision/mAP (small): 0.057154 -> ****
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982 -> ****
+* The detection rate of medium objects
+    * DetectionBoxes_Precision/mAP (medium): 0.477788 -> ****
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> ****
