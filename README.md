@@ -29,7 +29,8 @@ $> cd ./object_detection_in_an_urban_environment
 ```
 ### 2. Unziping a pretrained model
 ```
-$> cat ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz.* > ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+$> cd ./training/pretrained-models/
+$> wget http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
 $> tar xvfz ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
 ```
 ### 3. Cloning the tensorflow object detection api
