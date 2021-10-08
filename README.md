@@ -184,3 +184,12 @@ Loss/total_loss: 0.431040
 * The detection rate of medium objects
     * DetectionBoxes_Precision/mAP (medium): 0.477788 -> **0.596757**
     * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> **0.655430**
+* The detection rate of large objects
+    * DetectionBoxes_Precision/mAP (large): 0.751707 -> **0.764074**
+    * DetectionBoxes_Recall/AR@100 (large): 0.805090 -> **0.802555**
+
+#### (6) Conclusion
+* The training total loss is decreased less than about half of the experiment#2 result
+* The evaluation total loss is decreased less than about half of the experiment#2 result
+* The detection rate of small objects is increased more than about twice of the experiment#2 result
+* The detection rate of medium objects is increased more than about 10 percents of the experiment#2 result
