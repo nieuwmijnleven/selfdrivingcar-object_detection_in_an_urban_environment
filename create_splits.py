@@ -32,17 +32,15 @@ def split(data_dir):
     dataset_file_path = os.path.join(data_dir, '*.tfrecord')
     dataset_files = glob.glob(dataset_file_path)
     N = len(dataset_files)
-    #print('N = {}'.format(N))
 
     n_train, n_valid, n_test = int(N*0.6), int(N*0.2), int(N*0.2)
-    #print('n_train = {}, n_valid = {}, n_test = {}'.format(n_train, n_valid, n_test))
+
+    # Shuffle dataset
+    random.shuffle(dataset_files)
 
     train_files = dataset_files[:n_train]
     valid_files = dataset_files[n_train:n_train+n_valid]
     test_files = dataset_files[n_train+n_valid:]
-    #print('train_files = {}'.format(len(train_files)))
-    #print('valid_files = {}'.format(len(valid_files)))
-    #print('test_files = {}'.format(len(test_files)))
 
     train_dir = os.path.join('.', 'data', 'train')
     valid_dir = os.path.join('.', 'data', 'valid')
