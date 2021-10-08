@@ -3,6 +3,22 @@
 ## Project overview
 This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self driving car systems?
 
+### Project Introduction
+In this project, we will apply the skills you have gained in this course to create a convolutional neural network to detect and classify objects using data from Waymo. We will be provided with a dataset of images of urban environments containing annotated cyclists, pedestrians and vehicles.
+
+* We will practice the following schemes 
+   * Analysis what augmentations are meaningful for this project
+   * Train a neural network to detect and classify objects
+   * Monitor the training with TensorBoard and decide when to end it 
+   * Experiment with different hyperparameters to improve your model's performance
+
+### Why is object detection such an important component of self driving car systems?
+The object detection is one of the most important part of autonomous driving system, because this task is in charge of detecting obstables to keep driving safely.
+* The object detection system makes the followings possible:
+   * recognize categories of object instances
+   * locate them spatially
+   * avoid obstables
+
 ## Set up
 This section should contain a brief description of the steps to follow to run the code for this repository.
 
