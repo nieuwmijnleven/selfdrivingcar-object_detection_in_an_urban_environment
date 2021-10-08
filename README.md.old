@@ -1,4 +1,4 @@
-# Object Detection in an Urban Environment
+# Object detection in an Urban Environment
 
 ## Data
 
@@ -25,11 +25,7 @@ experiments/
     - experiment0/....
     - experiment1/....
     - experiment2/...
-```
-
-The training folder will be organized as follow:
-```
-- pretrained-models/: contains the checkpoints of the pretrained models.
+    - pretrained-models/: contains the checkpoints of the pretrained models.
 ```
 
 ## Prerequisites
@@ -48,7 +44,7 @@ In the classroom workspace, every library and package should already be installe
 
 ### Download and process the data
 
-**Note:** ”If you are using the classroom workspace, we have already completed the steps in the section for you. You can find the downloaded and processed files within the `/data/waymo/` directory (note that this is different than the `/home/workspace/data` you'll use for splitting ). Check this out then proceed to the "Exploratory Data Analysis" part.
+**Note:** This first step is already done for you in the classroom workspace. You can find the downloaded and processed files within the `/data/waymo/` directory (note that this is different than the `/home/workspace/data` you'll use for splitting )
 
 The first goal of this project is to download the data from the Waymo's Google Cloud bucket to your local machine. For this project, we only need a subset of the data provided (for example, we do not need to use the Lidar data). Therefore, we are going to download and trim immediately each file. In `download_process.py`, you can view the `create_tf_example` function, which will perform this processing. This function takes the components of a Waymo Tf record and saves them in the Tf Object Detection api format. An example of such function is described [here](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records). We are already providing the `label_map.pbtxt` file.
 
@@ -56,7 +52,6 @@ You can run the script using the following (you will need to add your desired di
 ```
 python download_process.py --data_dir {processed_file_location} --temp_dir {temp_dir_for_raw_files}
 ```
-**Note** - If you are working in the classroom workspace then you don't need to run the above script.
 
 You are downloading 100 files so be patient! Once the script is done, you can look inside your data_dir folder to see if the files have been downloaded and processed correctly.
 
@@ -72,7 +67,7 @@ Keep in mind that you should refer to this analysis to create the different spit
 
 Now you have become one with the data! Congratulations! How will you use this knowledge to create the different splits: training, validation and testing. There are no single answer to this question but you will need to justify your choice in your submission. You will need to implement the `split_data` function in the `create_splits.py` file. Once you have implemented this function, run it using:
 ```
-python create_splits.py --data_dir ./data/
+python create_splits.py --data_dir /home/workspace/data/
 ```
 
 NOTE: Keep in mind that your storage is limited. The files should be <ins>moved</ins> and not copied. 
@@ -85,7 +80,7 @@ First, let's download the [pretrained model](http://download.tensorflow.org/mode
 
 Now we need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
 ```
-python edit_config.py --train_dir ./data/train/ --eval_dir ./data/valid/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
+python edit_config.py --train_dir /home/workspace/data/train/ --eval_dir /home/workspace/data/val/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
 ```
 A new config file has been created, `pipeline_new.config`.
 
@@ -94,11 +89,11 @@ A new config file has been created, `pipeline_new.config`.
 You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
 * a training process:
 ```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=./pipeline_experiment0.config
+python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config
 ```
 * an evaluation process:
 ```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=./pipeline_experiment0.config --checkpoint_dir=./training/reference/
+python model_main_tf2.py --model_dir=training/reference/ --pipeline_config_path=training/reference/pipeline_new.config --checkpoint_dir=training/reference/
 ```
 
 NOTE: both processes will display some Tensorflow warnings.
@@ -118,16 +113,12 @@ Keep in mind that the following are also available:
 #### Export the trained model
 Modify the arguments of the following function to adjust it to your models:
 ```
-python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./pipeline_experiment0.config --trained_checkpoint_dir ./training/reference/  --output_directory ./saved_model
+python .\exporter_main_v2.py --input_type image_tensor --pipeline_config_path training/experiment0/pipeline.config --trained_checkpoint_dir training/experiment0/ckpt-50 --output_directory training/experiment0/exported_model/
 ```
 
 Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
 ```
-python inference_video.py --labelmap_path ./label_map.pbtxt --model_path ./experiments/experiment0/saved_model --tf_record_path ./data/test/segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord --config_path ./pipeline_experiment0.config --output_path ./experiments/experiment0/animation.mp4
-```
-in the case of occuring an error related to ffmpeg, run the following command
-```
-conda install -c conda-forge ffmpeg
+python inference_video.py -labelmap_path label_map.pbtxt --model_path training/experiment0/exported_model/saved_model --tf_record_path /home/workspace/data/test/tf.record --config_path training/experiment0/pipeline_new.config --output_path animation.mp4
 ```
 
 ## Submission Template
@@ -150,3 +141,4 @@ This section should detail the results of the reference experiment. It should in
 
 #### Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+ 
