@@ -34,11 +34,11 @@ $> cd ../../../
 ```
 ### 5. Running train
 ```
-$> a
+$> python experiments/model_main_tf2.py --model_dir=./training/experiment2-reference/ --pipeline_config_path=./pipeline_experiment2.config
 ```
 ### 6. Running evaluation
 ```
-$> b
+$> python experiments/model_main_tf2.py --model_dir=./training/experiment3-reference/ --pipeline_config_path=./pipeline_experiment3.config --checkpoint_dir=./training/experiment3-reference/
 ```
 
 ## Dataset
