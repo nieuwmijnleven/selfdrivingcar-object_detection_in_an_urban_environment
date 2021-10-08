@@ -8,41 +8,40 @@ This section should contain a brief description of the steps to follow to run th
 
 ### Cloning the project repository
 ```
-git clone https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
+$> git clone https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
 ```
 ### Changing directory
 ```
-cd ./object_detection_in_an_urban_environment
+$> cd ./object_detection_in_an_urban_environment
 ```
 ### Unziping a pretrained model
 ```
-cat ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz.* > ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
-tar xvfz ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+$> cat ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz.* > ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+$> tar xvfz ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
 ```
 ### Cloning the tensorflow object detection api
 ```
-cd ../../
-mkdir tensorflow
-git clone https://github.com/tensorflow/models.git
+$> cd ../../
+$> mkdir tensorflow
+$> git clone https://github.com/tensorflow/models.git
 ```
 ### installing the object detection api  
 ```
-wget https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protoc-3.18.0-linux-x86_64.zip 
-unzip protoc-3.18.0-linux-x86_64.zip
-cd models/research
-./../../bin/protoc object_detection/protos/*.proto --python_out=.
-cp object_detection/packages/tf2/setup.py .
-python -m pip install --use-feature=2020-resolver .
-/content/object_detection_in_an_urban_environment
-cd ../../../
+$> wget https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protoc-3.18.0-linux-x86_64.zip 
+$> unzip protoc-3.18.0-linux-x86_64.zip
+$> cd models/research
+$> ./../../bin/protoc object_detection/protos/*.proto --python_out=.
+$> cp object_detection/packages/tf2/setup.py .
+$> python -m pip install --use-feature=2020-resolver .
+$> cd ../../../
 ```
 ### run train
 ```
-a
+$> a
 ```
 ### run evaluation
 ```
-b
+$> b
 ```
 
 ## Dataset
