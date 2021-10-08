@@ -6,6 +6,45 @@ This section should contain a brief description of the project and what we are t
 ## Set up
 This section should contain a brief description of the steps to follow to run the code for this repository.
 
+### Cloning the project repository
+```
+git clone https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
+```
+### Changing directory
+```
+cd ./object_detection_in_an_urban_environment
+```
+### Unziping a pretrained model
+```
+cat ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz.* > ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+tar xvfz ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+```
+### Cloning the tensorflow object detection api
+```
+cd ../../
+mkdir tensorflow
+git clone https://github.com/tensorflow/models.git
+```
+### installing the object detection api  
+```
+wget https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protoc-3.18.0-linux-x86_64.zip 
+unzip protoc-3.18.0-linux-x86_64.zip
+cd models/research
+./../../bin/protoc object_detection/protos/*.proto --python_out=.
+cp object_detection/packages/tf2/setup.py .
+python -m pip install --use-feature=2020-resolver .
+/content/object_detection_in_an_urban_environment
+cd ../../../
+```
+### run train
+```
+a
+```
+### run evaluation
+```
+b
+```
+
 ## Dataset
 ### Dataset analysis
 This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
