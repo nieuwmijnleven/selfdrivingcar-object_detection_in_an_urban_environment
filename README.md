@@ -8,7 +8,7 @@ This section should contain a brief description of the steps to follow to run th
 
 ### 1. Cloning the project repository
 ```
-$> git clone https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
+$> git clone -b main https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
 $> cd ./object_detection_in_an_urban_environment
 ```
 ### 2. Unziping a pretrained model
