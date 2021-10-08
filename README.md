@@ -26,10 +26,10 @@ This section should contain a quantitative and qualitative description of the da
 * Especially, the count of cyclist samples is abolutely small.
 * Therefore, it would be challenging for our model to dectect cyclists.
 
-### Cross validation
+## Cross validation
 This section should detail the cross validation strategy and justify your approach.
 
-#### Sigmoid Focal Cross Entropy Loss
+### Sigmoid Focal Cross Entropy Loss
 * Focal loss is extremely useful for classification when you have **highly imbalanced classes**
     * The loss value is much high for a sample which is misclassified by the classifier as compared to the loss value corresponding to a well-classified example.
         * Focal loss **addresses this class imbalance by reshaping the standard cross entropy loss** such that it down-weights the loss assigned to well-classified examples
