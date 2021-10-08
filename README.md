@@ -140,3 +140,15 @@ This section should highlight the different strategies you adopted to improve yo
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment-improvement2-loss.png?raw=true" width=600 />
 
 #### (4) Experimental Results : **ACCURACY**
+```
+```
+
+#### (5) Experimental Result : **ANALYSIS**
+* The training total loss : 0.4719 -> **0.2176**  
+* The evaluation total loss : 0.821058 -> **** 
+* The detection rate of small objects
+    * DetectionBoxes_Precision/mAP (small): 0.057154 -> ****
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982 -> ****
+* The detection rate of medium objects
+    * DetectionBoxes_Precision/mAP (medium): 0.477788 -> ****
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> ****
