@@ -10,6 +10,21 @@ This section should contain a brief description of the steps to follow to run th
 ### Dataset analysis
 This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
 
+#### Samples
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-sample1.png?raw=true" width=400 />
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-sample2.png?raw=true" width=400 />
+
+#### The number of each objects
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-count.png?raw=true" width=400 />
+
+The number of vehicles = 352694
+The number of pedestrians = 103664
+The number of cyclists = 2639
+
+#### Conclusion
+* Our training dataset has the lack of the number of pedestrian samples and cyclist samples comparing to that of vehicle samples.
+* Especially, the count of cyclist samples is abolutely small.
+* Therefore, it would be challenging for our model to dectect cyclists.
 
 ### Cross validation
 This section should detail the cross validation strategy and justify your approach.
