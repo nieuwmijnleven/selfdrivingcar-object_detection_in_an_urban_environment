@@ -17,9 +17,9 @@ This section should contain a quantitative and qualitative description of the da
 #### The number of each objects
 <img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-count.png?raw=true" width=400 />
 
-The number of vehicles = 352694
-The number of pedestrians = 103664
-The number of cyclists = 2639
+* The number of vehicles = 352694
+* The number of pedestrians = 103664
+* The number of cyclists = 2639
 
 #### Conclusion
 * Our training dataset has the lack of the number of pedestrian samples and cyclist samples comparing to that of vehicle samples.
