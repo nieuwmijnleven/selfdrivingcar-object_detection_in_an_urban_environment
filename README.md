@@ -164,10 +164,10 @@ This section should highlight the different strategies you adopted to improve yo
 
 #### (5) Experimental Result : **ANALYSIS**
 * The training total loss : 0.4719 -> **0.2176**  
-* The evaluation total loss : 0.821058 -> **** 
+* The evaluation total loss : 0.821058 -> **0.431040** 
 * The detection rate of small objects
-    * DetectionBoxes_Precision/mAP (small): 0.057154 -> ****
-    * DetectionBoxes_Recall/AR@100 (small): 0.124982 -> ****
+    * DetectionBoxes_Precision/mAP (small): 0.057154 -> **0.127566**
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982 -> **0.216469**
 * The detection rate of medium objects
-    * DetectionBoxes_Precision/mAP (medium): 0.477788 -> ****
-    * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> ****
+    * DetectionBoxes_Precision/mAP (medium): 0.477788 -> **0.596757**
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> **0.655430**
