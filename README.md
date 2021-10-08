@@ -1,152 +1,254 @@
-# Object Detection in an Urban Environment
+# Submission
 
-## Data
-
-For this project, we will be using data from the [Waymo Open dataset](https://waymo.com/open/). The files can be downloaded directly from the website as tar files or from the [Google Cloud Bucket](https://console.cloud.google.com/storage/browser/waymo_open_dataset_v_1_2_0_individual_files/) as individual tf records. 
-
-## Structure
-
-The data in the classroom workspace will be organized as follows:
-```
-/data/waymo/
-    - contains the tf records in the Tf Object detection api format.
-
-/home/workspace/data/
-    - test: contain the test data (empty to start)
-    - train: contain the train data (empty to start)
-    - val: contain the val data (empty to start)
-```
-
-The experiments folder will be organized as follow:
-```
-experiments/
-    - exporter_main_v2.py: to create an inference model
-    - model_main_tf2.py: to launch training
-    - experiment0/....
-    - experiment1/....
-    - experiment2/...
-```
-
-The training folder will be organized as follow:
-```
-- pretrained-models/: contains the checkpoints of the pretrained models.
-```
-
-## Prerequisites
-
-### Local Setup
-
-For local setup if you have your own Nvidia GPU, you can use the provided Dockerfile and requirements in the [build directory](./build).
-
-Follow [the README therein](./build/README.md) to create a docker container and install all prerequisites.
-
-### Classroom Workspace
-
-In the classroom workspace, every library and package should already be installed in your environment. You will not need to make use of `gcloud` to download the images.
-
-## Instructions
-
-### Download and process the data
-
-**Note:** ”If you are using the classroom workspace, we have already completed the steps in the section for you. You can find the downloaded and processed files within the `/data/waymo/` directory (note that this is different than the `/home/workspace/data` you'll use for splitting ). Check this out then proceed to the "Exploratory Data Analysis" part.
-
-The first goal of this project is to download the data from the Waymo's Google Cloud bucket to your local machine. For this project, we only need a subset of the data provided (for example, we do not need to use the Lidar data). Therefore, we are going to download and trim immediately each file. In `download_process.py`, you can view the `create_tf_example` function, which will perform this processing. This function takes the components of a Waymo Tf record and saves them in the Tf Object Detection api format. An example of such function is described [here](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records). We are already providing the `label_map.pbtxt` file.
-
-You can run the script using the following (you will need to add your desired directory names):
-```
-python download_process.py --data_dir {processed_file_location} --temp_dir {temp_dir_for_raw_files}
-```
-**Note** - If you are working in the classroom workspace then you don't need to run the above script.
-
-You are downloading 100 files so be patient! Once the script is done, you can look inside your data_dir folder to see if the files have been downloaded and processed correctly.
-
-
-### Exploratory Data Analysis
-
-Now that you have downloaded and processed the data, you should explore the dataset! This is the most important task of any machine learning project. To do so, open the `Exploratory Data Analysis` notebook. In this notebook, your first task will be to implement a `display_instances` function to display images and annotations using `matplotlib`. This should be very similar to the function you created during the course. Once you are done, feel free to spend more time exploring the data and report your findings. Report anything relevant about the dataset in the writeup.
-
-Keep in mind that you should refer to this analysis to create the different spits (training, testing and validation). 
-
-
-### Create the splits
-
-Now you have become one with the data! Congratulations! How will you use this knowledge to create the different splits: training, validation and testing. There are no single answer to this question but you will need to justify your choice in your submission. You will need to implement the `split_data` function in the `create_splits.py` file. Once you have implemented this function, run it using:
-```
-python create_splits.py --data_dir ./data/
-```
-
-NOTE: Keep in mind that your storage is limited. The files should be <ins>moved</ins> and not copied. 
-
-### Edit the config file
-
-Now you are ready for training. As we explain during the course, the Tf Object Detection API relies on **config files**. The config that we will use for this project is `pipeline.config`, which is the config for a SSD Resnet 50 640x640 model. You can learn more about the Single Shot Detector [here](https://arxiv.org/pdf/1512.02325.pdf). 
-
-First, let's download the [pretrained model](http://download.tensorflow.org/models/object_detection/tf2/20200711/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz) and move it to `training/pretrained-models/`. 
-
-Now we need to edit the config files to change the location of the training and validation files, as well as the location of the label_map file, pretrained weights. We also need to adjust the batch size. To do so, run the following:
-```
-python edit_config.py --train_dir ./data/train/ --eval_dir ./data/valid/ --batch_size 4 --checkpoint ./training/pretrained-models/ssd_resnet50_v1_fpn_640x640_coco17_tpu-8/checkpoint/ckpt-0 --label_map label_map.pbtxt
-```
-A new config file has been created, `pipeline_new.config`.
-
-### Training
-
-You will now launch your very first experiment with the Tensorflow object detection API. Create a folder `training/reference`. Move the `pipeline_new.config` to this folder. You will now have to launch two processes: 
-* a training process:
-```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=./pipeline_experiment0.config
-```
-* an evaluation process:
-```
-python experiments/model_main_tf2.py --model_dir=./training/reference/ --pipeline_config_path=./pipeline_experiment0.config --checkpoint_dir=./training/reference/
-```
-
-NOTE: both processes will display some Tensorflow warnings.
-
-To monitor the training, you can launch a tensorboard instance by running `tensorboard --logdir=training`. You will report your findings in the writeup. 
-
-### Improve the performances
-
-Most likely, this initial experiment did not yield optimal results. However, you can make multiple changes to the config file to improve this model. One obvious change consists in improving the data augmentation strategy. The [`preprocessor.proto`](https://github.com/tensorflow/models/blob/master/research/object_detection/protos/preprocessor.proto) file contains the different data augmentation method available in the Tf Object Detection API. To help you visualize these augmentations, we are providing a notebook: `Explore augmentations.ipynb`. Using this notebook, try different data augmentation combinations and select the one you think is optimal for our dataset. Justify your choices in the writeup. 
-
-Keep in mind that the following are also available:
-* experiment with the optimizer: type of optimizer, learning rate, scheduler etc
-* experiment with the architecture. The Tf Object Detection API [model zoo](https://github.com/tensorflow/models/blob/master/research/object_detection/g3doc/tf2_detection_zoo.md) offers many architectures. Keep in mind that the `pipeline.config` file is unique for each architecture and you will have to edit it. 
-
-
-### Creating an animation
-#### Export the trained model
-Modify the arguments of the following function to adjust it to your models:
-```
-python experiments/exporter_main_v2.py --input_type image_tensor --pipeline_config_path ./pipeline_experiment0.config --trained_checkpoint_dir ./training/reference/  --output_directory ./saved_model
-```
-
-Finally, you can create a video of your model's inferences for any tf record file. To do so, run the following command (modify it to your files):
-```
-python inference_video.py --labelmap_path ./label_map.pbtxt --model_path ./experiments/experiment0/saved_model --tf_record_path ./data/test/segment-10072231702153043603_5725_000_5745_000_with_camera_labels.tfrecord --config_path ./pipeline_experiment0.config --output_path ./experiments/experiment0/animation.mp4
-```
-in the case of occuring an error related to ffmpeg, run the following command
-```
-conda install -c conda-forge ffmpeg
-```
-
-## Submission Template
-
-### Project overview
+## Project overview
 This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self driving car systems?
 
-### Set up
+### Project Introduction
+In this project, we will apply the skills you have gained in this course to create a convolutional neural network to detect and classify objects using data from Waymo. We will be provided with a dataset of images of urban environments containing annotated cyclists, pedestrians and vehicles.
+
+* We will practice the following schemes : 
+   * Analysis what augmentations are meaningful for this project
+   * Train a neural network to detect and classify objects
+   * Monitor the training with TensorBoard and decide when to end it 
+   * Experiment with different hyperparameters to improve your model's performance
+
+### Why is object detection such an important component of self driving car systems?
+The object detection is one of the most important part of autonomous driving system, because this task is in charge of detecting obstables to keep driving safely.
+* The object detection system makes the followings possible :
+   * recognize categories of object instances
+   * locate them spatially
+   * avoid obstables
+
+## Set up
 This section should contain a brief description of the steps to follow to run the code for this repository.
 
-### Dataset
-#### Dataset analysis
+### 1. Cloning the project repository
+```
+$> git clone -b main https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment.git
+$> cd ./object_detection_in_an_urban_environment
+```
+### 2. Unziping a pretrained model
+```
+$> cat ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz.* > ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+$> tar xvfz ssd_resnet50_v1_fpn_640x640_coco17_tpu-8.tar.gz
+```
+### 3. Cloning the tensorflow object detection api
+```
+$> cd ../../
+$> mkdir tensorflow
+$> git clone https://github.com/tensorflow/models.git
+```
+### 4. Installing the object detection api  
+```
+$> wget https://github.com/protocolbuffers/protobuf/releases/download/v3.18.0/protoc-3.18.0-linux-x86_64.zip 
+$> unzip protoc-3.18.0-linux-x86_64.zip
+$> cd models/research
+$> ./../../bin/protoc object_detection/protos/*.proto --python_out=.
+$> cp object_detection/packages/tf2/setup.py .
+$> python -m pip install --use-feature=2020-resolver .
+$> cd ../../../
+```
+### 5. Running train
+```
+$> python experiments/model_main_tf2.py --model_dir=./training/experiment2-reference/ --pipeline_config_path=./pipeline_experiment2.config
+```
+### 6. Running evaluation
+```
+$> python experiments/model_main_tf2.py --model_dir=./training/experiment3-reference/ --pipeline_config_path=./pipeline_experiment3.config --checkpoint_dir=./training/experiment3-reference/
+```
+
+## Dataset
+### Dataset analysis
 This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
-#### Cross validation
+
+#### Samples
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-sample1.png?raw=true" width=400 />
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-sample2.png?raw=true" width=400 />
+
+#### The number of each objects
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/dataset_analysis-count.png?raw=true" width=400 />
+
+* The number of vehicles = 352694
+* The number of pedestrians = 103664
+* The number of cyclists = 2639
+
+#### Conclusion
+* Our training dataset has the lack of the number of pedestrian samples and cyclist samples comparing to that of vehicle samples.
+* Especially, the count of cyclist samples is abolutely small.
+* Therefore, it would be challenging for our model to dectect cyclists.
+
+## Cross validation
 This section should detail the cross validation strategy and justify your approach.
 
-### Training 
-#### Reference experiment
+### Sigmoid Focal Cross Entropy Loss
+* Focal loss is extremely useful for classification when you have **highly imbalanced classes**
+    * The loss value is much high for a sample which is misclassified by the classifier as compared to the loss value corresponding to a well-classified example.
+        * Focal loss **addresses this class imbalance by reshaping the standard cross entropy loss** such that it down-weights the loss assigned to well-classified examples
+* Focal Loss focuses training on a sparse set of hard examples and prevents the vast number of easy negatives from overwhelming the detector during training
+* One of **the best use-cases** of focal loss is its usage in **object detection** where the imbalance between the background class and other classes is extremely high
+
+## Training 
+### Reference experiment
 This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
 
-#### Improve on the reference
+### 1. experiment#1 : finding an optimal learning_rate
+#### (1) Learning Rate
+* strategy : **SGD Optimizer** + **momentum** + **cosine_decay_learning_rate**
+* configuration 
+```
+optimizer {
+    momentum_optimizer {
+      learning_rate {
+        cosine_decay_learning_rate {
+          learning_rate_base: 0.04
+          total_steps: 25000
+          warmup_learning_rate: 0.013333
+          warmup_steps: 2000
+        }
+      }
+      momentum_optimizer_value: 0.9
+    }
+    use_moving_average: false
+  }
+```
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-learning_rate.png?raw=true" width=400 />
+
+#### (2) The relation between learning rates and total losses 
+* observing the relation between total loss and learning rate using cosine_decay_learning_rate
+* I finally chosen **0.00047572** as the learning rate for the **experiment#2**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-finding-learning-rate1.png?raw=true" width=400 />
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment1-finding-learning-rate2.png?raw=true" width=400 />
+
+### 2. experiment#2 : applying data augmentation and using a constant learning_rate
+#### (1) Data Augmentation : applied additional three data augmentation schemes to preprocessing steps
+* random_horizontal_flip
+* random_crop_image
+* **applying gaussian filter**
+* **adjusting brightness**
+* **adjusting saturation**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/data_augmentaion.png?raw=true" width=400 />
+
+#### (2) A constant learning_rate
+* the constant learning rate : **0.0004**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment2-learning_rate.png?raw=true" width=400 />
+
+#### (3) Experimental Results : **LOSS**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment2-loss.png?raw=true" width=600 />
+
+#### (4) Experimental Results : **ACCURACY**
+```
+DetectionBoxes_Precision/mAP: 0.194451
+DetectionBoxes_Precision/mAP@.50IOU: 0.384055
+DetectionBoxes_Precision/mAP@.75IOU: 0.164196
+DetectionBoxes_Precision/mAP (small): 0.057154
+DetectionBoxes_Precision/mAP (medium): 0.477788
+DetectionBoxes_Precision/mAP (large): 0.751707
+DetectionBoxes_Recall/AR@1: 0.060288
+DetectionBoxes_Recall/AR@10: 0.206005
+DetectionBoxes_Recall/AR@100: 0.264424
+DetectionBoxes_Recall/AR@100 (small): 0.124982
+DetectionBoxes_Recall/AR@100 (medium): 0.555998
+DetectionBoxes_Recall/AR@100 (large): 0.805090
+Loss/localization_loss: 0.339901
+Loss/classification_loss: 0.258205
+Loss/regularization_loss: 0.222951
+Loss/total_loss: 0.821058
+```
+
+#### (5) Experimental Result : **ANALYSIS**
+* The training total loss : **HIGH**
+    * 0.4719  
+* The evaluation total loss : **HIGH**
+    * 0.821058 
+* The detection rate of small objects : **LOW**
+    * DetectionBoxes_Precision/mAP (small): 0.057154
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982
+* The detection rate of medium objects  : **LOW**
+    * DetectionBoxes_Precision/mAP (medium): 0.477788
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998
+
+## Improve on the reference
 This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+
+### Experiment#3 : making a improved model
+#### (1) Reducing total loss
+* Changing Mementum optimizer to **Adam optimizer**
+* Changing the constant learning rate to **the manual step learning rate** 
+    * 0.0001(initial) -> 0.00005(15000 step) -> 0.00001(30000 step) -> 0.000005(60000 step) -> 0.000001(90000 step)      
+* Changing the initial learning rate from 0.0004 to **0.0001**
+```
+  optimizer {
+    adam_optimizer {
+      learning_rate {
+        manual_step_learning_rate {
+          initial_learning_rate: .0001
+          schedule {
+            step: 15000
+            learning_rate: .00005
+          }
+          schedule {
+            step: 30000
+            learning_rate: .00001
+          }
+          schedule {
+            step: 60000
+            learning_rate: .000005
+          }
+          schedule {
+            step: 90000
+            learning_rate: .000001
+          }
+       }
+    }
+   use_moving_average: false
+  }
+```
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment-improvement2-learning_rate.png?raw=true" width=400 />
+
+#### (2) Enhancing Accuracy
+* increase samples
+    * increase the number of dataset files from 100 to **799**
+
+#### (3) Experimental Results : **LOSS**
+
+<img src = "https://github.com/nieuwmijnleven/object_detection_in_an_urban_environment/blob/experiment_report/images/experiment-improvement2-loss.png?raw=true" width=600 />
+
+#### (4) Experimental Results : **ACCURACY**
+```
+DetectionBoxes_Precision/mAP (small): 0.127566
+DetectionBoxes_Precision/mAP (medium): 0.596757
+DetectionBoxes_Precision/mAP (large): 0.764074
+DetectionBoxes_Recall/AR@1: 0.041750
+DetectionBoxes_Recall/AR@10: 0.204503
+DetectionBoxes_Recall/AR@100: 0.301717
+DetectionBoxes_Recall/AR@100 (small): 0.216469
+DetectionBoxes_Recall/AR@100 (medium): 0.655430
+DetectionBoxes_Recall/AR@100 (large): 0.802555
+Loss/localization_loss: 0.214834
+Loss/classification_loss: 0.173316
+Loss/regularization_loss: 0.042890
+Loss/total_loss: 0.431040
+```
+
+#### (5) Experimental Result : **ANALYSIS**
+* The training total loss : 0.4719 -> **0.2176**  
+* The evaluation total loss : 0.821058 -> **0.431040** 
+* The detection rate of small objects
+    * DetectionBoxes_Precision/mAP (small): 0.057154 -> **0.127566**
+    * DetectionBoxes_Recall/AR@100 (small): 0.124982 -> **0.216469**
+* The detection rate of medium objects
+    * DetectionBoxes_Precision/mAP (medium): 0.477788 -> **0.596757**
+    * DetectionBoxes_Recall/AR@100 (medium): 0.555998 -> **0.655430**
+* The detection rate of large objects
+    * DetectionBoxes_Precision/mAP (large): 0.751707 -> **0.764074**
+    * DetectionBoxes_Recall/AR@100 (large): 0.805090 -> **0.802555**
+
+#### (6) Conclusion
+* The training total loss is decreased less than about half of the experiment#2 result
+* The evaluation total loss is decreased less than about half of the experiment#2 result
+* The detection rate of small objects is increased more than about twice of the experiment#2 result
+* The detection rate of medium objects is increased more than about 10 percents of the experiment#2 result
