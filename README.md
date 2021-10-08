@@ -113,16 +113,20 @@ This section should highlight the different strategies you adopted to improve yo
         manual_step_learning_rate {
           initial_learning_rate: .0001
           schedule {
-            step: 25000
+            step: 15000
             learning_rate: .00005
           }
           schedule {
-            step: 60000
+            step: 30000
             learning_rate: .00001
           }
           schedule {
-            step: 85000
+            step: 60000
             learning_rate: .000005
+          }
+          schedule {
+            step: 90000
+            learning_rate: .000001
           }
        }
     }
