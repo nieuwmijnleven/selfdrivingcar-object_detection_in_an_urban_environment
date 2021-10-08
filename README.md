@@ -160,6 +160,19 @@ This section should highlight the different strategies you adopted to improve yo
 
 #### (4) Experimental Results : **ACCURACY**
 ```
+DetectionBoxes_Precision/mAP (small): 0.127566
+DetectionBoxes_Precision/mAP (medium): 0.596757
+DetectionBoxes_Precision/mAP (large): 0.764074
+DetectionBoxes_Recall/AR@1: 0.041750
+DetectionBoxes_Recall/AR@10: 0.204503
+DetectionBoxes_Recall/AR@100: 0.301717
+DetectionBoxes_Recall/AR@100 (small): 0.216469
+DetectionBoxes_Recall/AR@100 (medium): 0.655430
+DetectionBoxes_Recall/AR@100 (large): 0.802555
+Loss/localization_loss: 0.214834
+Loss/classification_loss: 0.173316
+Loss/regularization_loss: 0.042890
+Loss/total_loss: 0.431040
 ```
 
 #### (5) Experimental Result : **ANALYSIS**
