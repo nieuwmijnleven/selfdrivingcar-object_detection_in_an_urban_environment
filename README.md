@@ -81,6 +81,11 @@ This section should contain a quantitative and qualitative description of the da
 ## Cross validation
 This section should detail the cross validation strategy and justify your approach.
 
+### Cross validation strategy
+Given the initial samples(unshuffled data), your model finds some unfavorable local minima and it is hard for it to unlearn it when looking at the latter sample. So, we first shuffle the data to make the order of dataset random and then split into train, validation, and test sets. 
+
+We generally use 7:2:1 or 8:1:1 as the proportion of training, validation, and test datasets. However, in the waymo dataset, one image includes many samples from 10 to 67 cars. so, we considered that it is reasonable to adjust the proportion of the datasets to 6:2:2. Moreover, we increase the number dataset files from 100 to 799. Finally, any overfitting issues were not found from experimental results.     
+
 ### Sigmoid Focal Cross Entropy Loss
 * Focal loss is extremely useful for classification when you have **highly imbalanced classes**
     * The loss value is much high for a sample which is misclassified by the classifier as compared to the loss value corresponding to a well-classified example.
